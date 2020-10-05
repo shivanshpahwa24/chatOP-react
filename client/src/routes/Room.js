@@ -46,7 +46,7 @@ const Room = (props) => {
     const peer = new RTCPeerConnection({
       iceServers: [
         {
-          urls: "stun:stun.stunprotocol.org",
+          urls: "stun:stun.l.google.com:19302",
         },
       ],
     });
@@ -130,7 +130,7 @@ const Room = (props) => {
 
   return (
     <div>
-      <video autoPlay ref={userVideo} />
+      <video autoPlay muted ref={userVideo} />
       <video autoPlay ref={partnerVideo} />
     </div>
   );
