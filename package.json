@@ -1,0 +1,29 @@
+{
+  "name": "vsee",
+  "version": "1.0.0",
+  "description": "A simple app to make video calls and chat with your friends",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Shivansh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivanshpahwa24/vSee/issues"
+  },
+  "homepage": "https://github.com/shivanshpahwa24/vSee#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.0",
+    "socket.io": "^2.3.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
