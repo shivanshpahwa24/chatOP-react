@@ -5,39 +5,44 @@ const SERVER = "http://127.0.0.1:5000";
 const Chat = (props) => {
   const [msg, setMsg] = useState("");
 
-  const userName = props.match.params.userName;
+  /* const userName = props.match.params.userName;
   const roomName = props.match.params.roomName;
 
-  // Get room and users
-  props.socket.on("roomUsers", ({ roomName, users }) => {
-    outputRoomName(roomName);
-    outputUsers(users);
-  });
+  const socketFunctions = (socket) => {
+    // Join chatroom
+    socket.emit("joinRoom", { userName, roomName });
 
-  // Message from server
-  props.socket.on("message", (message) => {
-    console.log(message);
-    outputMessage(message);
-    const chatMessages = document.getElementById("chat-messages");
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  });
+    // Get room and users
+    socket.on("roomUsers", ({ roomName, users }) => {
+      outputRoomName(roomName);
+      outputUsers(users);
+    });
 
-  // Join chatroom
-  props.socket.emit("joinRoom", { userName, roomName });
+    // Message from server
+    socket.on("message", (message) => {
+      console.log(message);
+      outputMessage(message);
+      const chatMessages = document.getElementById("chat-messages");
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
 
-  // Get room and users
-  props.socket.on("roomUsers", ({ roomName, users }) => {
-    outputRoomName(roomName);
-    outputUsers(users);
-  });
+    // Join chatroom
+    socket.emit("joinRoom", { userName, roomName });
 
-  // Message from server
-  props.socket.on("message", (message) => {
-    console.log(message);
-    outputMessage(message);
-    const chatMessages = document.getElementById("chat-messages");
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  });
+    // Get room and users
+    socket.on("roomUsers", ({ roomName, users }) => {
+      outputRoomName(roomName);
+      outputUsers(users);
+    });
+
+    // Message from server
+    socket.on("message", (message) => {
+      console.log(message);
+      outputMessage(message);
+      const chatMessages = document.getElementById("chat-messages");
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+  };
 
   // Message submit
   const handleSubmit = (e) => {
@@ -71,6 +76,10 @@ const Chat = (props) => {
       .join("")}`;
   };
 
+  useEffect(() => {
+    socketFunctions(props.socket);
+  }, []); */
+
   return (
     <div className="chat-container">
       <header className="chat-header">
@@ -95,7 +104,7 @@ const Chat = (props) => {
         <div className="chat-messages"></div>
       </main>
       <div className="chat-form-container">
-        <form id="chat-form" onSubmit={handleSubmit}>
+        <form id="chat-form">
           <input
             id="msg"
             type="text"

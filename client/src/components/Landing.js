@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 const Landing = (props) => {
   const history = useHistory();
@@ -17,11 +17,10 @@ const Landing = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Join chatroom
-    props.socket.emit("joinRoom", { userName, roomName });
-
-    history.push(`/room/${roomName}/${userName}`);
+    if (roomName && userName) {
+      return <Redirect to={`/room/${roomName}/${userName}`} />;
+    }
+    /*  history.push(`/room/${roomName}/${userName}`); */
   };
   return (
     <div className="join-container">

@@ -7,24 +7,20 @@ import socketIOClient from "socket.io-client";
 const SERVER = "http://127.0.0.1:5000";
 
 function App() {
-  var socket = socketIOClient(SERVER);
+  /*  var socket = socketIOClient(SERVER);
   socket.on("connection", () => {
     console.log(`I'm connected with the back-end`);
   });
-
+ */
   return (
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route
-            path="/"
-            exact
-            component={(props) => <Landing {...props} socket={socket} />}
-          />
+          <Route path="/" exact component={(props) => <Landing {...props} />} />
 
           <Route
             path="/room/:roomName/:userName"
-            component={(props) => <Chat {...props} socket={socket} />}
+            component={(props) => <Chat {...props} />}
           />
         </Switch>
       </BrowserRouter>
