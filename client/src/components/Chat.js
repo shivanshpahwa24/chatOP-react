@@ -1,30 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import io from "socket.io-client";
+const SERVER = "http://127.0.0.1:5000";
 
 const Chat = (props) => {
   const [msg, setMsg] = useState("");
 
   const userName = props.match.params.userName;
   const roomName = props.match.params.roomName;
-  const id = props.match.params.id;
-  const socketRef = useRef();
-
-  useEffect(() => {
-    socketRef.current = io.connect("/");
-  }, []);
-
-  // Join chatroom
-  socketRef.current.emit("joinRoom", { userName, roomName });
 
   // Get room and users
-  socketRef.current.on("roomUsers", ({ roomName, users }) => {
+  props.socket.on("roomUsers", ({ roomName, users }) => {
     outputRoomName(roomName);
     outputUsers(users);
   });
 
   // Message from server
-  socketRef.current.on("message", (message) => {
+  props.socket.on("message", (message) => {
+    console.log(message);
+    outputMessage(message);
+    const chatMessages = document.getElementById("chat-messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+
+  // Join chatroom
+  props.socket.emit("joinRoom", { userName, roomName });
+
+  // Get room and users
+  props.socket.on("roomUsers", ({ roomName, users }) => {
+    outputRoomName(roomName);
+    outputUsers(users);
+  });
+
+  // Message from server
+  props.socket.on("message", (message) => {
     console.log(message);
     outputMessage(message);
     const chatMessages = document.getElementById("chat-messages");
@@ -34,7 +42,7 @@ const Chat = (props) => {
   // Message submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    socketRef.current.emit("chatMessage", msg);
+    props.socket.emit("chatMessage", msg);
     setMsg("");
     e.target.elements.msg.focus();
   };

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Landing = (props) => {
+  const history = useHistory();
+
   const [formData, setFormData] = useState({
     roomName: "",
     userName: "",
@@ -16,8 +17,11 @@ const Landing = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = uuid();
-    props.history.push(`/room/${roomName}/${userName}/${id}`);
+
+    // Join chatroom
+    props.socket.emit("joinRoom", { userName, roomName });
+
+    history.push(`/room/${roomName}/${userName}`);
   };
   return (
     <div className="join-container">
