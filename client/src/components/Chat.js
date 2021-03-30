@@ -2,18 +2,80 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
-const ENDPOINT = "localhost:5000";
 
 let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const ENDPOINT = "localhost:5000";
+
+  const chatMessages = document.querySelector(".chat-messages");
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
     socket = io(ENDPOINT);
+
+    setName(name);
+    setRoom(room);
+    console.log(name, room);
+
+    // Join chatroom
+    socket.emit("joinRoom", { name, room });
+
+    // Get room and users
+    socket.on("roomUsers", ({ room, users }) => {
+      outputRoomName(room);
+      outputUsers(users);
+    });
+
+    // Message from server
+    socket.on("message", (message) => {
+      outputMessage(message);
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+
+    // Message submit
+    document.getElementById("chat-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const msg = e.target.elements.msg.value;
+
+      socket.emit("chatMessage", msg);
+
+      e.target.elements.msg.value = "";
+      e.target.elements.msg.focus();
+    });
   }, [ENDPOINT, location.search]);
+
+  // Output message to DOM
+  const outputMessage = (message) => {
+    const div = document.createElement("div");
+    div.classList.add("message");
+    div.innerHTML = `	<p class="meta">${message.username} <span>${message.time}</span></p>
+  <p class="text">
+    ${message.text}
+  </p>`;
+
+    chatMessages.appendChild(div);
+  };
+
+  // Add room name to DOM
+  const outputRoomName = (room) => {
+    document.getElementById("room-name1").innerText = room;
+    document.getElementById("room-name2").innerText = room;
+  };
+
+  //Add users to DOM
+  const outputUsers = (users) => {
+    document.getElementById("users1").innerHTML = `${users
+      .map((user) => `<li>${user.username}</li>`)
+      .join("")}`;
+    document.getElementById("users2").innerHTML = `${users
+      .map((user) => `<li>${user.username}</li>`)
+      .join("")}`;
+  };
 
   return (
     <div className="chat-container">
@@ -60,7 +122,7 @@ const Chat = ({ location }) => {
                 type="text"
                 placeholder="Enter Message"
                 required
-                autocomplete="off"
+                autoComplete="off"
               />
               <button className="chat-form-btn">
                 <i className="fas fa-paper-plane"></i>

@@ -23,7 +23,7 @@ const Landing = (props) => {
         <main className="join-main">
           <form>
             <div className="form-control">
-              <label for="userName">Username</label>
+              <label htmlFor="userName">Username</label>
               <input
                 type="text"
                 name="userName"
@@ -35,7 +35,7 @@ const Landing = (props) => {
               />
             </div>
             <div className="form-control">
-              <label for="roomName">Room Name</label>
+              <label htmlFor="roomName">Room Name</label>
               <input
                 type="text"
                 name="roomName"
