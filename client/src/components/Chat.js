@@ -1,124 +1,74 @@
 import React, { useState, useEffect, useRef } from "react";
+import io from "socket.io-client";
+import queryString from "query-string";
 import { Link } from "react-router-dom";
-const SERVER = "http://127.0.0.1:5000";
+const ENDPOINT = "localhost:5000";
 
-const Chat = (props) => {
-  const [msg, setMsg] = useState("");
+let socket;
 
-  /* const userName = props.match.params.userName;
-  const roomName = props.match.params.roomName;
-
-  const socketFunctions = (socket) => {
-    // Join chatroom
-    socket.emit("joinRoom", { userName, roomName });
-
-    // Get room and users
-    socket.on("roomUsers", ({ roomName, users }) => {
-      outputRoomName(roomName);
-      outputUsers(users);
-    });
-
-    // Message from server
-    socket.on("message", (message) => {
-      console.log(message);
-      outputMessage(message);
-      const chatMessages = document.getElementById("chat-messages");
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    });
-
-    // Join chatroom
-    socket.emit("joinRoom", { userName, roomName });
-
-    // Get room and users
-    socket.on("roomUsers", ({ roomName, users }) => {
-      outputRoomName(roomName);
-      outputUsers(users);
-    });
-
-    // Message from server
-    socket.on("message", (message) => {
-      console.log(message);
-      outputMessage(message);
-      const chatMessages = document.getElementById("chat-messages");
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    });
-  };
-
-  // Message submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    props.socket.emit("chatMessage", msg);
-    setMsg("");
-    e.target.elements.msg.focus();
-  };
-
-  // Output message to DOM
-  const outputMessage = (message) => {
-    const div = document.createElement("div");
-    div.classList.add("message");
-    div.innerHTML = `	<p class="meta">${message.username} <span>${message.time}</span></p>
-  <p class="text">
-    ${message.text}
-  </p>`;
-    const chatMessages = document.getElementById("chat-messages");
-    chatMessages.appendChild(div);
-  };
-
-  // Add room name to DOM
-  const outputRoomName = (roomName) => {
-    document.getElementById("room-name").innerText = roomName;
-  };
-
-  //Add users to DOM
-  const outputUsers = (users) => {
-    document.getElementById("users").innerHTML = `${users
-      .map((user) => `<li>${user.username}</li>`)
-      .join("")}`;
-  };
+const Chat = ({ location }) => {
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
 
   useEffect(() => {
-    socketFunctions(props.socket);
-  }, []); */
+    const { name, room } = queryString.parse(location.search);
+    socket = io(ENDPOINT);
+  }, [ENDPOINT, location.search]);
 
   return (
     <div className="chat-container">
-      <header className="chat-header">
-        <h1>
-          <i className="fas fa-smile"></i> ChatCord
-        </h1>
-        <Link to="/" className="btn">
+      <header className="chat-header shadow sticky-top">
+        <h3>
+          <i className="far fa-comment-dots"></i> ChatOP
+        </h3>
+        <Link to="/" className="btn1 shadow-sm">
+          <i className="fas fa-sign-out-alt"></i>
           Leave Room
         </Link>
       </header>
+      <div className="chat-upperbar">
+        <div>
+          <h6>
+            <i className="fas fa-comments"></i> Room Name
+          </h6>
+          <h5 id="room-name1"></h5>
+        </div>
+        <div>
+          <h6>
+            <i className="fas fa-users"></i> Users
+          </h6>
+          <ul id="users1"></ul>
+        </div>
+      </div>
       <main className="chat-main">
         <div className="chat-sidebar">
-          <h3>
-            <i className="fas fa-comments"></i> Room Name:
-          </h3>
-          <h2 id="room-name"></h2>
-          <h3>
+          <h4>
+            <i className="fas fa-comments"></i> Room Name
+          </h4>
+          <h2 id="room-name2"></h2>
+          <h4>
             <i className="fas fa-users"></i> Users
-          </h3>
-          <ul id="users"></ul>
+          </h4>
+          <ul id="users2"></ul>
         </div>
-        <div className="chat-messages"></div>
+        <div className="chat-box">
+          <div className="chat-messages"></div>
+          <div className="chat-form-container shadow-lg">
+            <form id="chat-form">
+              <input
+                id="msg"
+                type="text"
+                placeholder="Enter Message"
+                required
+                autocomplete="off"
+              />
+              <button className="chat-form-btn">
+                <i className="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
       </main>
-      <div className="chat-form-container">
-        <form id="chat-form">
-          <input
-            id="msg"
-            type="text"
-            placeholder="Enter Message"
-            required
-            autocomplete="off"
-            value={msg}
-            onChange={setMsg(msg)}
-          />
-          <button type="submit" className="btn">
-            <i className="fas fa-paper-plane"></i> Send
-          </button>
-        </form>
-      </div>
     </div>
   );
 };

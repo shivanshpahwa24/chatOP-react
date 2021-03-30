@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 :root {
-  --dark-color-a: #667aff;
-  --dark-color-b: #7386ff;
-  --light-color: #e6e9ff;
+  --dark-color-a: rgb(87, 87, 87);
+  --dark-color-b: #1cb8a9;
+  --light-color: #e3fff8;
   --success-color: #5cb85c;
   --error-color: #d9534f;
 }
@@ -17,8 +17,9 @@
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  background: var(--light-color);
-  margin: 20px;
+  background-image: url("./assets/background.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 ul {
@@ -29,7 +30,7 @@ a {
   text-decoration: none;
 }
 
-.btn {
+.btn1 {
   cursor: pointer;
   padding: 5px 15px;
   background: var(--light-color);
@@ -41,33 +42,32 @@ a {
 /* Chat Page */
 
 .chat-container {
-  max-width: 1100px;
-  background: #fff;
-  margin: 30px auto;
   overflow: hidden;
 }
 
 .chat-header {
-  background: var(--dark-color-a);
-  color: #fff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  padding: 15px;
+  background: white;
+  color: rgb(87, 87, 87);
+  padding: 0 1rem;
   display: flex;
+  height: 8vh;
   align-items: center;
   justify-content: space-between;
 }
 
 .chat-main {
+  min-height: 92vh;
   display: grid;
   grid-template-columns: 1fr 3fr;
+  margin: 0;
 }
 
 .chat-sidebar {
   background: var(--dark-color-b);
   color: #fff;
   padding: 20px 20px 60px;
-  overflow-y: scroll;
+
+  margin: 0;
 }
 
 .chat-sidebar h2 {
@@ -77,17 +77,15 @@ a {
   margin-bottom: 20px;
 }
 
-.chat-sidebar h3 {
-  margin-bottom: 15px;
-}
-
 .chat-sidebar ul li {
-  padding: 10px 0;
+  padding: 5px 0;
 }
-
+.chat-upperbar {
+  display: none;
+}
 .chat-messages {
   padding: 30px;
-  max-height: 500px;
+  max-height: 85vh;
   overflow-y: scroll;
 }
 
@@ -113,7 +111,10 @@ a {
 
 .chat-form-container {
   padding: 20px 30px;
-  background-color: var(--dark-color-a);
+  background-color: #99f7ef;
+  position: fixed;
+  bottom: 0;
+  width: 75vw;
 }
 
 .chat-form-container form {
@@ -122,16 +123,41 @@ a {
 
 .chat-form-container input[type="text"] {
   font-size: 16px;
-  padding: 5px;
-  height: 40px;
-  flex: 1;
-}
+  padding: 7px 15px;
 
+  flex: 1;
+  border: none;
+  background: var(--light-color);
+  border-radius: 1.5rem;
+}
+.chat-form-container input[type="text"] :focus {
+  outline: 0;
+}
+.chat-form-btn {
+  cursor: pointer;
+  margin-left: 1rem;
+  padding: 10px 15px;
+  background: var(--light-color);
+  color: var(--dark-color-a);
+  border-radius: 50%;
+  border: 0;
+  font-size: 17px;
+}
+.chat-box {
+  margin: 0;
+}
 /* Join Page */
 .join-container {
   max-width: 500px;
-  margin: 80px auto;
   color: #fff;
+  margin: 1rem;
+  min-width: 400px;
+}
+.join-container-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .join-header {
@@ -162,29 +188,73 @@ a {
 
 .join-main input[type="text"] {
   font-size: 16px;
-  padding: 5px;
+  padding: 5px 10px;
   height: 40px;
   width: 100%;
+  border: #777;
+  border-radius: 0.5rem;
 }
 
-.join-main select {
+/* .join-main select {
   font-size: 16px;
-  padding: 5px;
+  padding: 5px 10px;
   height: 40px;
   width: 100%;
+  border: #777;
+  border-radius: 0.5rem;
 }
-
-.join-main .btn {
+ */
+.join-main .btn1 {
   margin-top: 20px;
   width: 100%;
+  border-radius: 1.5rem;
+}
+.chat-header h3 {
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 700px) {
   .chat-main {
     display: block;
+    min-height: 70vh;
   }
 
   .chat-sidebar {
     display: none;
+  }
+  .chat-messages {
+    max-height: 65vh;
+  }
+  .chat-form-container {
+    width: 100vw;
+  }
+  .chat-header h3 {
+    font-size: 1.7rem;
+  }
+  .chat-header a {
+    font-size: 0.9rem;
+  }
+  .chat-upperbar {
+    background: var(--dark-color-b);
+    color: #fff;
+    padding: 1rem;
+    min-height: 8vh;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chat-upperbar h5 {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .chat-upperbar h6 {
+    margin-left: -0.2rem;
+  }
+
+  .chat-upperbar ul li {
+    font-size: 0.9rem;
   }
 }

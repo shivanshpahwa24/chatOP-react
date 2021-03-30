@@ -14,7 +14,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const botName = "ChatCord Bot";
+const botName = "ChatOP Bot";
 
 //Run when client connects
 io.on("connection", (socket) => {
@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
 
     socket.join(user.room);
     // Only to the client that is connecting
-    socket.emit("message", formatMessage(botName, "Welcome to ChatCord!"));
+    socket.emit("message", formatMessage(botName, "Welcome to ChatOP!"));
 
     // Broadcast when a user connects (It will tell everyone exxcept the user)
     socket.broadcast
