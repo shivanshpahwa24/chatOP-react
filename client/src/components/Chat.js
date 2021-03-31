@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 let socket;
 
@@ -22,27 +23,35 @@ const Chat = ({ location }) => {
 
     // Join chatroom
     socket.emit("joinRoom", { name, room });
+    console.log(name, room);
 
-    // Get room and users
-    socket.on("roomUsers", ({ room, users }) => {
-      setUsers(users);
-    });
+    return () => {
+      socket.emit("disconnect");
 
+      socket.off();
+    };
+  }, [ENDPOINT, location.search]);
+
+  useEffect(() => {
     // Message from server
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
-  }, [ENDPOINT, location.search]);
+  }, [messages]);
+
+  useEffect(() => {
+    // Get room and users
+    socket.on("roomUsers", ({ room, users }) => {
+      setUsers([...users, users]);
+    });
+  }, [room, users]);
 
   // Output message to DOM
   const OutputMessage = (messages) => {
-    /*  document.querySelector(".chat-messages").scrollTop = document.querySelector(
-      ".chat-messages"
-    ).scrollHeight; */
     console.log(messages);
-    return <div></div>;
-    /* return (
-      <>
+
+    return (
+      <ScrollToBottom>
         {messages.map((message) => (
           <div className="message">
             <p className="meta">
@@ -51,32 +60,31 @@ const Chat = ({ location }) => {
             <p className="text">{message.text}</p>
           </div>
         ))}
-      </>
-    ); */
+      </ScrollToBottom>
+    );
   };
 
   //Add users to DOM
   const OutputUsers = (users) => {
     console.log(users);
-    return <div></div>;
-    /* return (
-      <>
-        {users.map((user) => (
-          <li>{user.username}</li>
-        ))}
-      </>
-    ); */
+    if (users) {
+      return (
+        <>
+          {users.map((user) => (
+            <li>{user.username}</li>
+          ))}
+        </>
+      );
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    socket.emit("chatMessage", msg);
-
-    setMsg("");
-    OutputUsers(users);
-    OutputMessage(messages);
-    document.getElementById("msg").focus();
+    if (msg) {
+      socket.emit("chatMessage", msg);
+      setMsg("");
+      document.getElementById("msg").focus();
+    }
   };
 
   return (
@@ -101,7 +109,7 @@ const Chat = ({ location }) => {
           <h6>
             <i className="fas fa-users"></i> Users
           </h6>
-          <ul id="users1">{/* <OutputUsers users={users} /> */}</ul>
+          <ul id="users1">{users && <OutputUsers users={users} />}</ul>
         </div>
       </div>
       <main className="chat-main">
@@ -113,11 +121,11 @@ const Chat = ({ location }) => {
           <h4>
             <i className="fas fa-users"></i> Users
           </h4>
-          <ul id="users2">{/* {users && <OutputUsers users={users} />} */}</ul>
+          <ul id="users2">{users && <OutputUsers users={users} />}</ul>
         </div>
         <div className="chat-box">
           <div className="chat-messages">
-            {/* <OutputMessage messages={messages} /> */}
+            {messages && <OutputMessage messages={messages} />}
           </div>
           <div className="chat-form-container shadow-lg">
             <form id="chat-form" onSubmit={handleSubmit}>

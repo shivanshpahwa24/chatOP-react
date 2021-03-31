@@ -20,8 +20,8 @@ const botName = "ChatOP Bot";
 io.on("connection", (socket) => {
   console.log("New WS Connection");
 
-  socket.on("joinRoom", ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+  socket.on("joinRoom", ({ name, room }) => {
+    const user = userJoin(socket.id, name, room);
 
     socket.join(user.room);
     // Only to the client that is connecting
@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
       .to(user.room)
       .emit(
         "message",
-        formatMessage(botName, `${user.username} has joined the chat`)
+        formatMessage(botName, `${user.name} has joined the chat`)
       );
 
     // Send users and room info
@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit("message", formatMessage(user.username, msg));
+    io.to(user.room).emit("message", formatMessage(user.name, msg));
   });
 
   // Runs when client disconnects
@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
     if (user) {
       io.to(user.room).emit(
         "message",
-        formatMessage(botName, `${user.username} has left the chat`)
+        formatMessage(botName, `${user.name} has left the chat`)
       );
 
       // Send users and room info
