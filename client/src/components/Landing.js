@@ -16,33 +16,33 @@ const Landing = () => {
     <div className="join-container-align">
       <div className="join-container">
         <header className="join-header">
-          <h1>
+          <h2>
             <i className="far fa-comment-dots"></i> ChatOP
-          </h1>
+          </h2>
         </header>
-        <main className="join-main">
+        <div className="join-main">
           <form>
-            <div className="form-control">
-              <label htmlFor="userName">Username</label>
+            <div className="form-control1">
+              <label htmlFor="username">Username</label>
               <input
                 type="text"
                 name="userName"
                 id="userName"
                 value={userName}
-                placeholder="Enter username..."
                 onChange={handleChange}
+                placeholder="Enter username..."
                 required
               />
             </div>
-            <div className="form-control">
-              <label htmlFor="roomName">Room Name</label>
+            <div className="form-control1">
+              <label htmlFor="room">Room</label>
               <input
                 type="text"
                 name="roomName"
                 id="roomName"
-                onChange={handleChange}
                 value={roomName}
-                placeholder="e.g. xyz"
+                onChange={handleChange}
+                placeholder="Enter room name (e.g. ABCDE)"
                 required
               />
             </div>
@@ -52,7 +52,7 @@ const Landing = () => {
               </button>
             </Link>
           </form>
-        </main>
+        </div>
       </div>
     </div>
   );

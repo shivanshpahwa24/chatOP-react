@@ -1,7 +1,7 @@
 {
-  "name": "vsee",
+  "name": "chatop",
   "version": "1.0.0",
-  "description": "A simple app to make video calls and chat with your friends",
+  "description": "A basic chat application made using react, node and socket.io",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
