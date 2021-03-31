@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
-import ScrollToBottom from "react-scroll-to-bottom";
+import Messages from "./Messages";
+import Users from "./Users";
 
 let socket;
 
@@ -46,44 +47,14 @@ const Chat = ({ location }) => {
     });
   }, [room, users]);
 
-  // Output message to DOM
-  const OutputMessage = (messages) => {
-    console.log(messages);
-
-    return (
-      <ScrollToBottom>
-        {messages.map((message) => (
-          <div className="message">
-            <p className="meta">
-              {message.username} <span>{message.time}</span>
-            </p>
-            <p className="text">{message.text}</p>
-          </div>
-        ))}
-      </ScrollToBottom>
-    );
-  };
-
-  //Add users to DOM
-  const OutputUsers = (users) => {
-    console.log(users);
-    if (users) {
-      return (
-        <>
-          {users.map((user) => (
-            <li>{user.username}</li>
-          ))}
-        </>
-      );
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    let chatMessages = document.querySelector(".chat-messages");
     if (msg) {
       socket.emit("chatMessage", msg);
       setMsg("");
       document.getElementById("msg").focus();
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   };
 
@@ -109,7 +80,9 @@ const Chat = ({ location }) => {
           <h6>
             <i className="fas fa-users"></i> Users
           </h6>
-          <ul id="users1">{users && <OutputUsers users={users} />}</ul>
+          <ul id="users1">
+            <Users users={users} />
+          </ul>
         </div>
       </div>
       <main className="chat-main">
@@ -121,11 +94,13 @@ const Chat = ({ location }) => {
           <h4>
             <i className="fas fa-users"></i> Users
           </h4>
-          <ul id="users2">{users && <OutputUsers users={users} />}</ul>
+          <ul id="users2">
+            <Users users={users} />
+          </ul>
         </div>
         <div className="chat-box">
           <div className="chat-messages">
-            {messages && <OutputMessage messages={messages} />}
+            <Messages messages={messages} />
           </div>
           <div className="chat-form-container shadow-lg">
             <form id="chat-form" onSubmit={handleSubmit}>
