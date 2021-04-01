@@ -12,7 +12,7 @@ const Chat = ({ location }) => {
   const [room, setRoom] = useState("");
   const [msg, setMsg] = useState("");
   const [users, setUsers] = useState([]);
-  const ENDPOINT = "localhost:5000";
+  const ENDPOINT = "https://veesee.herokuapp.com/";
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
