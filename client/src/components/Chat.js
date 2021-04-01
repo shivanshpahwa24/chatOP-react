@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import Users from "./Users";
 
 let socket;
-/* let ENDPOINT; */
+let ENDPOINT;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
@@ -16,17 +16,15 @@ const Chat = ({ location }) => {
 
   const [messages, setMessages] = useState([]);
 
-  const ENDPOINT = "https://veesee.herokuapp.com/";
-
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
-    /* if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development") {
       ENDPOINT = "localhost:5000";
     }
 
     if (process.env.NODE_ENV === "production") {
       ENDPOINT = "https://veesee.herokuapp.com/";
-    } */
+    }
 
     socket = io(ENDPOINT);
 
