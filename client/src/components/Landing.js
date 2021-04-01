@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 const Landing = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Landing = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="join-container-align">
       <div className="join-container">
@@ -46,7 +48,12 @@ const Landing = () => {
                 required
               />
             </div>
-            <Link to={`/chat?name=${userName}&room=${roomName}`}>
+            <Link
+              onClick={(event) =>
+                !userName || !roomName ? event.preventDefault() : null
+              }
+              to={`/chat?name=${userName}&room=${roomName}`}
+            >
               <button className="btn1" type="submit">
                 Join Chat
               </button>

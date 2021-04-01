@@ -6,17 +6,26 @@ import Messages from "./Messages";
 import Users from "./Users";
 
 let socket;
+let ENDPOINT;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [msg, setMsg] = useState("");
   const [users, setUsers] = useState([]);
-  const ENDPOINT = "https://veesee.herokuapp.com/";
+
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
+    if (process.env.NODE_ENV === "development") {
+      ENDPOINT = "localhost:5000";
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      ENDPOINT = "https://veesee.herokuapp.com/";
+    }
+
     socket = io(ENDPOINT);
 
     setName(name);
@@ -24,14 +33,13 @@ const Chat = ({ location }) => {
 
     // Join chatroom
     socket.emit("joinRoom", { name, room });
-    console.log(name, room);
 
     return () => {
       socket.emit("disconnect");
 
       socket.off();
     };
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     // Message from server

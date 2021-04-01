@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
+const cors = require("cors");
 const formatMessage = require("./utils/messages");
 const {
   userJoin,
@@ -69,6 +70,8 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+app.use(cors);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

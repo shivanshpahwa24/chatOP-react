@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shivanshpahwa24/vSee#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.29.0",
