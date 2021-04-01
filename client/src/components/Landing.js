@@ -7,6 +7,7 @@ const Landing = () => {
     roomName: "",
     userName: "",
   });
+  const [join, setJoin] = useState(false);
 
   const { roomName, userName } = formData;
 
@@ -14,6 +15,10 @@ const Landing = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setJoin(true);
+  };
   return (
     <div className="join-container-align">
       <div className="join-container">
@@ -23,7 +28,7 @@ const Landing = () => {
           </h2>
         </header>
         <div className="join-main">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-control1">
               <label htmlFor="username">Username</label>
               <input
@@ -48,19 +53,20 @@ const Landing = () => {
                 required
               />
             </div>
-            <Link
+            {/* <Link
               onClick={(event) =>
                 !userName || !roomName ? event.preventDefault() : null
               }
               to={`/chat?name=${userName}&room=${roomName}`}
-            >
-              <button className="btn1" type="submit">
-                Join Chat
-              </button>
-            </Link>
+            > */}
+            <button className="btn1" type="submit">
+              Join Chat
+            </button>
+            {/* </Link> */}
           </form>
         </div>
       </div>
+      {join && <Redirect to={`/chat?name=${userName}&room=${roomName}`} />}
     </div>
   );
 };
