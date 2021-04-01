@@ -215,7 +215,7 @@ a {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .chat-main {
     display: block;
     min-height: 70vh;
@@ -258,5 +258,14 @@ a {
 
   .chat-upperbar ul li {
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .join-container {
+    max-width: 500px;
+    color: #fff;
+    margin: 1rem;
+    min-width: 350px;
   }
 }
