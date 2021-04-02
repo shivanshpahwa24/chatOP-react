@@ -146,6 +146,14 @@ a {
 .chat-box {
   margin: 0;
 }
+
+.logo2 {
+  margin-left: -1rem;
+  height: 180px;
+}
+.logo1 {
+  height: 63px;
+}
 /* Join Page */
 .join-container {
   max-width: 500px;
@@ -267,5 +275,12 @@ a {
     color: #fff;
     margin: 1rem;
     min-width: 350px;
+  }
+  .logo2 {
+    margin-top: -0.5rem;
+    height: 130px;
+  }
+  .logo1 {
+    height: 55px;
   }
 }

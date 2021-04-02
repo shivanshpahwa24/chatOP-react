@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Link } from "react-router-dom";
 import Messages from "./Messages";
 import Users from "./Users";
+import Logo from "../assets/logo2.png";
 
 let socket;
 let ENDPOINT;
@@ -69,9 +70,7 @@ const Chat = ({ location }) => {
   return (
     <div className="chat-container">
       <header className="chat-header shadow sticky-top">
-        <h3>
-          <i className="far fa-comment-dots"></i> ChatOP
-        </h3>
+        <img src={Logo} alt="logo" className="logo2" />
         <Link to="/" className="btn1 shadow-sm">
           <i className="fas fa-sign-out-alt"></i>
           Leave Room

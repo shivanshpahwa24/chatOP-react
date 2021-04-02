@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import Logo from "../assets/logo1.png";
 
 const Landing = () => {
   const [formData, setFormData] = useState({
@@ -22,9 +23,7 @@ const Landing = () => {
     <div className="join-container-align">
       <div className="join-container">
         <header className="join-header">
-          <h2>
-            <i className="far fa-comment-dots"></i> ChatOP
-          </h2>
+          <img src={Logo} alt="logo" className="logo1" />
         </header>
         <div className="join-main">
           <form onSubmit={handleSubmit}>
