@@ -14,8 +14,13 @@ const Chat = ({ location }) => {
   const [room, setRoom] = useState("");
   const [msg, setMsg] = useState("");
   const [users, setUsers] = useState([]);
-
   const [messages, setMessages] = useState([]);
+
+  /*  const messagesEndRef = useRef();
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }; */
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -47,6 +52,9 @@ const Chat = ({ location }) => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
+    /* scrollToBottom(); */
+    let chatMessages = document.querySelector(".chat-messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }, [messages]);
 
   useEffect(() => {
@@ -58,12 +66,11 @@ const Chat = ({ location }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let chatMessages = document.querySelector(".chat-messages");
+
     if (msg) {
       socket.emit("chatMessage", msg);
       setMsg("");
       document.getElementById("msg").focus();
-      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   };
 
