@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const http = require("http");
+const sslRedirect = require("heroku-ssl-redirect").default;
 const socketio = require("socket.io");
 const formatMessage = require("./utils/messages");
 const {
@@ -11,6 +12,7 @@ const {
 } = require("./utils/users");
 
 const app = express();
+app.use(sslRedirect());
 const server = http.createServer(app);
 const io = socketio(server);
 
