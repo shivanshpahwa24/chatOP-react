@@ -29,7 +29,7 @@ const Chat = ({ location }) => {
     }
 
     if (process.env.NODE_ENV === "production") {
-      ENDPOINT = "https://veesee.herokuapp.com/";
+      ENDPOINT = "https://chatopp.herokuapp.com/";
     }
 
     socket = io(ENDPOINT);
