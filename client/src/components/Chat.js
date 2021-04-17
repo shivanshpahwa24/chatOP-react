@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
@@ -16,11 +16,11 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
 
-  /*  const messagesEndRef = useRef();
+  const messagesEndRef = useRef();
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }; */
+  };
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -50,11 +50,17 @@ const Chat = ({ location }) => {
   useEffect(() => {
     // Message from server
     socket.on("message", (message) => {
-      setMessages([...messages, message]);
+      /* setMessages([...messages, message]); */
+      setMessages((prevMessages) => prevMessages.concat([message]));
     });
-    /* scrollToBottom(); */
-    let chatMessages = document.querySelector(".chat-messages");
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    /* let chatMessages = document.querySelector(".chat-messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight; */
+  }, []);
+
+  //For scrolling to bottom on new messages
+  useEffect(() => {
+    scrollToBottom();
   }, [messages]);
 
   useEffect(() => {
@@ -115,7 +121,9 @@ const Chat = ({ location }) => {
         <div className="chat-box">
           <div className="chat-messages">
             <Messages messages={messages} />
+            <div ref={messagesEndRef}></div>
           </div>
+
           <div className="chat-form-container shadow-lg">
             <form id="chat-form" onSubmit={handleSubmit}>
               <input
