@@ -83,30 +83,67 @@ a {
 .chat-upperbar {
   display: none;
 }
+.chat-box {
+  width: 100%;
+}
 .chat-messages {
   padding: 30px;
+  width: 100%;
   max-height: 85vh;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.chat-messages .message-contaniner {
+  display: inline-block;
+  max-width: 70%;
+  position: relative;
 }
 
 .chat-messages .message {
-  padding: 10px;
+  padding: 0.4rem 0.8rem;
   margin-bottom: 15px;
-  background-color: var(--light-color);
   border-radius: 5px;
   overflow-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-name-tag {
+  position: absolute;
+}
+
+.message-align-self {
+  float: right;
+}
+.message-align-bot {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.message-align-others {
+  float: left;
+}
+
+.message-align-self .message {
+  background-color: #99f7ef;
+}
+.message-align-bot .message {
+  background-color: var(--dark-color-a);
+  color: rgb(220, 220, 220);
+  font-size: 0.8rem;
+}
+.message-align-others .message {
+  background-color: var(--light-color);
 }
 
 .chat-messages .message .meta {
-  font-size: 15px;
+  padding-left: 2rem;
+  align-self: flex-end;
+  font-size: 0.7rem;
   font-weight: bold;
-  color: var(--dark-color-b);
-  opacity: 0.7;
-  margin-bottom: 7px;
-}
-
-.chat-messages .message .meta span {
   color: #777;
+  opacity: 0.7;
+  display: inline;
 }
 
 .chat-form-container {

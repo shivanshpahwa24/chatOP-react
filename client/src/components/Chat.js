@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import Messages from "./Messages";
 import Users from "./Users";
 import Logo from "../assets/logo2.png";
+
+let socket;
+let ENDPOINT;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
@@ -13,7 +16,6 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
 
-  const socket = useRef();
   const messagesEndRef = useRef();
 
   const scrollToBottom = () => {
@@ -22,25 +24,32 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
+    if (process.env.NODE_ENV === "development") {
+      ENDPOINT = "localhost:5000";
+    }
 
-    socket.current = io.connect("/");
+    if (process.env.NODE_ENV === "production") {
+      ENDPOINT = "https://chatopp.herokuapp.com/";
+    }
+
+    socket = io(ENDPOINT);
 
     setName(name);
     setRoom(room);
 
     // Join chatroom
-    socket.current.emit("joinRoom", { name, room });
+    socket.emit("joinRoom", { name, room });
 
     return () => {
-      socket.current.emit("disconnect");
+      socket.emit("disconnect");
 
-      socket.current.close();
+      socket.close();
     };
   }, [location.search]);
 
   useEffect(() => {
     // Message from server
-    socket.current.on("message", (message) => {
+    socket.on("message", (message) => {
       /* setMessages([...messages, message]); */
       setMessages((prevMessages) => prevMessages.concat([message]));
     });
@@ -56,7 +65,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     // Get room and users
-    socket.current.on("roomUsers", ({ room, users }) => {
+    socket.on("roomUsers", ({ room, users }) => {
       setUsers([...users, users]);
     });
   }, [room, users]);
@@ -65,7 +74,7 @@ const Chat = ({ location }) => {
     e.preventDefault();
 
     if (msg) {
-      socket.current.emit("chatMessage", msg);
+      socket.emit("chatMessage", msg);
       setMsg("");
       document.getElementById("msg").focus();
     }
@@ -111,7 +120,7 @@ const Chat = ({ location }) => {
         </div>
         <div className="chat-box">
           <div className="chat-messages">
-            <Messages messages={messages} />
+            <Messages messages={messages} name={name} />
             <div ref={messagesEndRef}></div>
           </div>
 

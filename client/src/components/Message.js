@@ -1,12 +1,30 @@
 import React from "react";
-const Message = ({ message }) => {
+const Message = ({ message, name }) => {
   return (
-    <div className="message">
-      <p className="meta">
-        {message.name} <span>{message.time}</span>
-      </p>
-      <p className="text">{message.text}</p>
-    </div>
+    <>
+      {message.name === name ? (
+        <div className="message-contaniner message-align-self">
+          <p className="message-name-tag">You</p>
+          <div className="message">
+            <div className="text">{message.text}</div>
+            <div className="meta">{message.time}</div>
+          </div>
+        </div>
+      ) : message.name === "ChatOP Bot" ? (
+        <div className="message-contaniner message-align-bot">
+          <div className="message">
+            <div className="text">{message.text}</div>
+          </div>
+        </div>
+      ) : (
+        <div className="message-contaniner message-align-others">
+          <div className="message">
+            <div className="text">{message.text}</div>
+            <div className="meta">{message.time}</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
