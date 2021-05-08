@@ -95,32 +95,38 @@ a {
   flex-direction: column;
 }
 .chat-messages .message-contaniner {
-  display: inline-block;
   max-width: 70%;
-  position: relative;
 }
 
 .chat-messages .message {
   padding: 0.4rem 0.8rem;
   margin-bottom: 15px;
   border-radius: 5px;
-  overflow-wrap: break-word;
   display: flex;
   justify-content: space-between;
 }
+.chat-messages .message .text {
+  word-break: break-all;
+}
 
 .message-name-tag {
-  position: absolute;
+  color: var(--dark-color-a);
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0.3rem;
 }
 
 .message-align-self {
+  display: flex;
   float: right;
 }
 .message-align-bot {
+  display: inline-block;
   margin-left: 50%;
   transform: translateX(-50%);
 }
 .message-align-others {
+  display: flex;
   float: left;
 }
 

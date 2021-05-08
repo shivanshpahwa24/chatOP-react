@@ -4,7 +4,7 @@ const Message = ({ message, name }) => {
     <>
       {message.name === name ? (
         <div className="message-contaniner message-align-self">
-          <p className="message-name-tag">You</p>
+          <div className="message-name-tag">You</div>
           <div className="message">
             <div className="text">{message.text}</div>
             <div className="meta">{message.time}</div>
@@ -22,6 +22,7 @@ const Message = ({ message, name }) => {
             <div className="text">{message.text}</div>
             <div className="meta">{message.time}</div>
           </div>
+          <div className="message-name-tag">{message.name}</div>
         </div>
       )}
     </>
