@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 :root {
-  --dark-color-a: rgb(87, 87, 87);
+  --dark-color-a: #575757;
   --dark-color-b: #1cb8a9;
   --light-color: #e3fff8;
 }
@@ -105,7 +105,12 @@ a {
   justify-content: space-between;
 }
 .chat-messages .message .text {
-  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
 .message-name-tag {
@@ -142,7 +147,7 @@ a {
 }
 
 .chat-messages .message .meta {
-  padding-left: 2rem;
+  padding-left: 1rem;
   align-self: flex-end;
   font-size: 0.7rem;
   font-weight: bold;
@@ -324,5 +329,18 @@ a {
   }
   .logo1 {
     height: 55px;
+  }
+  .chat-messages .message-contaniner {
+    max-width: 80%;
+  }
+  .chat-messages .message-align-bot {
+    max-width: 100%;
+  }
+
+  .chat-messages .message .meta {
+    padding-left: 0.8rem;
+  }
+  .chat-messages {
+    padding: 30px 20px;
   }
 }
