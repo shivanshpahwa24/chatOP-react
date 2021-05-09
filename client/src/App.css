@@ -4,8 +4,6 @@
   --dark-color-a: rgb(87, 87, 87);
   --dark-color-b: #1cb8a9;
   --light-color: #e3fff8;
-  --success-color: #5cb85c;
-  --error-color: #d9534f;
 }
 
 * {
@@ -17,6 +15,7 @@
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
+  font-display: swap;
   background-image: url("./assets/background.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -131,7 +130,7 @@ a {
 }
 
 .message-align-self .message {
-  background-color: #99f7ef;
+  background-color: #c3fff0;
 }
 .message-align-bot .message {
   background-color: var(--dark-color-a);

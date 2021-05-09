@@ -136,7 +136,11 @@ const Chat = ({ location }) => {
                 name="msg"
                 autoComplete="off"
               />
-              <button className="chat-form-btn" type="submit">
+              <button
+                className="chat-form-btn"
+                type="submit"
+                name="chat-form-btn"
+              >
                 <i className="fas fa-paper-plane"></i>
               </button>
             </form>
